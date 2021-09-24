@@ -1,0 +1,12 @@
+# Gradle files
+.gradle/
+gradle/
+build/
+.gitattributes
+gradlew
+gradlew.bat
+settings.gradle
+
+# Intellij IDEA files
+.idea/
+*.iml
