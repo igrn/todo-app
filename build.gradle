@@ -8,4 +8,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
