@@ -1,53 +1,42 @@
 package igrn.todo.controller;
 
 import igrn.todo.dto.ColumnDto;
-import igrn.todo.dto.ColumnUpdateDto;
-import igrn.todo.dto.TicketDto;
+import igrn.todo.dto.ColumnShortDto;
+import igrn.todo.dto.ColumnTitleDto;
+import igrn.todo.service.ColumnService;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/boards/{boardId}/columns")
 public class ColumnController {
+    private final ColumnService columnService;
 
-    // Получить определенную колонку со всеми её карточками
+    public ColumnController(ColumnService columnService) {
+        this.columnService = columnService;
+    }
+
     @GetMapping("/{columnId}")
     public ColumnDto getColumn(@PathVariable Integer columnId,
                                @PathVariable Integer boardId) {
-        List<TicketDto> tickets = List.of(
-                new TicketDto(1, columnId, "Ticket 1"),
-                new TicketDto(2, columnId, "Ticket 2")
-        );
-        return new ColumnDto(columnId, boardId, "Column " + columnId, tickets);
+        return columnService.getColumn(columnId, boardId);
     }
 
-    // Создать колонку (без карточек)
     @PostMapping
-    public ColumnDto createColumn(@RequestBody ColumnUpdateDto columnUpdateDto,
-                                  @PathVariable Integer boardId) {
-        return new ColumnDto(999, boardId, columnUpdateDto.getTitle(), null);
+    public ColumnShortDto createColumn(@PathVariable Integer boardId,
+                                       @RequestBody ColumnTitleDto columnTitleDto) {
+        return columnService.createColumn(boardId, columnTitleDto);
     }
 
-    // Изменить определенную колонку
     @PutMapping("/{columnId}")
-    public ColumnDto editColumn(@RequestBody ColumnUpdateDto columnUpdateDto,
-                                @PathVariable Integer columnId,
-                                @PathVariable Integer boardId) {
-        List<TicketDto> tickets = List.of(
-                new TicketDto(1, columnId, "Ticket 1"),
-                new TicketDto(2, columnId, "Ticket 2")
-        );
-        return new ColumnDto(columnId, boardId, columnUpdateDto.getTitle(), tickets);
+    public ColumnDto editColumn(@PathVariable Integer columnId,
+                                @PathVariable Integer boardId,
+                                @RequestBody ColumnTitleDto columnTitleDto) {
+        return columnService.editColumn(columnId, boardId, columnTitleDto);
     }
 
-    // Удалить колонку (со всеми её карточками!)
     @DeleteMapping("/{columnId}")
     public ColumnDto deleteColumn(@PathVariable Integer columnId,
                                   @PathVariable Integer boardId) {
-        List<TicketDto> tickets = List.of(
-                new TicketDto(1, columnId, "Ticket 1"),
-                new TicketDto(2, columnId, "Ticket 2")
-        );
-        return new ColumnDto(columnId, boardId, "Deleted Column", tickets);
+        return columnService.deleteColumn(columnId, boardId);
     }
 }
