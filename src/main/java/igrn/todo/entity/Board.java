@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.time.Instant;
 
@@ -20,14 +21,12 @@ public class Board {
     private String title;
 
     @CreationTimestamp
-    private Instant createdAt;
+    private Instant createdAt;     //FIXME: неправильные часовые пояса у всех timestamp
 
     @UpdateTimestamp
     private Instant updatedAt;
 
-    public Board() {
-
-    }
+    public Board() {}
 
     public Board(Integer userId, String title) {
         this.userId = userId;

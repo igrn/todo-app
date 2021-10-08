@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.time.Instant;
 
@@ -25,9 +26,7 @@ public class Column {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    public Column() {
-
-    }
+    public Column() {}
 
     public Column(Integer boardId, String title) {
         this.boardId = boardId;

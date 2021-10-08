@@ -3,6 +3,7 @@ package igrn.todo.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.Instant;
 
