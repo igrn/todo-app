@@ -4,12 +4,12 @@ import igrn.todo.entity.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
-    List<Ticket> findAllByColumnId(Integer columnId);
-
-    void deleteAllByColumnId(Integer columnId);
+    Optional<Ticket> findByIdAndColumn_IdAndColumn_Board_Id(Integer ticketId,
+                                                            Integer columnId,
+                                                            Integer boardId);
 }

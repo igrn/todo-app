@@ -17,7 +17,6 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_id_seq_generator")
     private Integer id;
 
-    private Integer columnId;
     private String title;
 
     @CreationTimestamp
@@ -26,10 +25,14 @@ public class Ticket {
     @UpdateTimestamp
     private Instant updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "column_id", nullable = false)
+    private Column column;
+
     public Ticket() {}
 
-    public Ticket(Integer columnId, String title) {
-        this.columnId = columnId;
+    public Ticket(String title, Column column) {
         this.title = title;
+        this.column = column;
     }
 }

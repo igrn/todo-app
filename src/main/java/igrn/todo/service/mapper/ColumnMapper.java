@@ -3,12 +3,10 @@ package igrn.todo.service.mapper;
 import igrn.todo.dto.ColumnDto;
 import igrn.todo.dto.ColumnShortDto;
 import igrn.todo.entity.Column;
-import igrn.todo.entity.Ticket;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,21 +17,17 @@ public class ColumnMapper {
         this.ticketMapper = ticketMapper;
     }
 
-    public ColumnDto toColumnDto(Column column, Collection<Ticket> tickets) {
+    public ColumnDto toColumnDto(Column column) {
         return new ColumnDto(
                 column.getId(),
                 column.getTitle(),
-                ticketMapper.toTicketDto(tickets)
+                ticketMapper.toTicketDto(column.getTickets())
         );
     }
 
-    public List<ColumnDto> toColumnDto(Map<Column, Collection<Ticket>> columns) {
-        return columns.entrySet().stream()
-                .map(entry -> {
-                    Column column = entry.getKey();
-                    Collection<Ticket> tickets = entry.getValue();
-                    return toColumnDto(column, tickets);
-                })
+    public List<ColumnDto> toColumnDto(Collection<Column> columns) {
+        return columns.stream()
+                .map(this::toColumnDto)
                 .collect(Collectors.toList());
     }
 

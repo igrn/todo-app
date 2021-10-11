@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,10 +22,13 @@ public class Board {
     private String title;
 
     @CreationTimestamp
-    private Instant createdAt;     //FIXME: неправильные часовые пояса у всех timestamp
+    private Instant createdAt;
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+    private List<Column> columns;
 
     public Board() {}
 

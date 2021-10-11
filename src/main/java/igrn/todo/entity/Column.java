@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,7 +18,6 @@ public class Column {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "column_id_seq_generator")
     private Integer id;
 
-    private Integer boardId;
     private String title;
 
     @CreationTimestamp
@@ -26,10 +26,17 @@ public class Column {
     @UpdateTimestamp
     private Instant updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "board_id", nullable = false)
+    private Board board;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "column")
+    private List<Ticket> tickets;
+
     public Column() {}
 
-    public Column(Integer boardId, String title) {
-        this.boardId = boardId;
+    public Column(String title, Board board) {
         this.title = title;
+        this.board = board;
     }
 }
