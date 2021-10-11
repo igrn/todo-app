@@ -1,5 +1,6 @@
 package igrn.todo.controller;
 
+import igrn.todo.annotation.Loggable;
 import igrn.todo.dto.BoardDto;
 import igrn.todo.dto.BoardShortDto;
 import igrn.todo.dto.BoardTitleDto;
@@ -17,6 +18,7 @@ public class BoardController {
         this.boardService = boardService;
     }
 
+    @Loggable
     @GetMapping
     public List<BoardShortDto> getUserBoardsBaseInfo() {
         return boardService.getUserBoardsBaseInfo();
