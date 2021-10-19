@@ -24,22 +24,26 @@ public class BoardController {
         return boardService.getUserBoardsBaseInfo();
     }
 
+    @Loggable
     @GetMapping("/{boardId}")
     public BoardDto getBoard(@PathVariable Integer boardId) {
         return boardService.getBoard(boardId);
     }
 
+    @Loggable
     @PostMapping
     public BoardShortDto createBoard(@RequestBody BoardTitleDto boardTitleDto) {
         return boardService.createBoard(boardTitleDto);
     }
 
+    @Loggable
     @PutMapping("/{boardId}")
     public BoardShortDto editBoard(@PathVariable Integer boardId,
                                    @RequestBody BoardTitleDto boardTitleDto) {
         return boardService.editBoard(boardId, boardTitleDto);
     }
 
+    @Loggable
     @DeleteMapping("/{boardId}")
     public BoardShortDto deleteBoard(@PathVariable Integer boardId) {
         return boardService.deleteBoard(boardId);
