@@ -8,6 +8,9 @@ import igrn.todo.service.TicketService;
 import igrn.todo.service.factory.TicketFactory;
 import igrn.todo.service.mapper.TicketMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class JpaTicketService implements TicketService {
@@ -23,15 +26,18 @@ public class JpaTicketService implements TicketService {
         this.ticketFactory = ticketFactory;
     }
 
+    @Transactional
     @Override
     public TicketDto getTicket(Integer ticketId,
                                Integer columnId,
                                Integer boardId) {
-        Ticket ticket = ticketRepository.findByIdAndColumn_IdAndColumn_Board_Id(
-                ticketId, columnId, boardId).orElseThrow();
+        Ticket ticket = ticketRepository
+                .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
+                .orElseThrow(() -> new NoSuchElementException("ticket not found"));
         return ticketMapper.toTicketDto(ticket);
     }
 
+    @Transactional
     @Override
     public TicketDto createTicket(Integer columnId,
                                   Integer boardId,
@@ -41,24 +47,28 @@ public class JpaTicketService implements TicketService {
         return ticketMapper.toTicketDto(ticket);
     }
 
+    @Transactional
     @Override
     public TicketDto editTicket(Integer ticketId,
                                 Integer columnId,
                                 Integer boardId,
                                 TicketTitleDto ticketTitleDto) {
-        Ticket ticket = ticketRepository.findByIdAndColumn_IdAndColumn_Board_Id(
-                ticketId, columnId, boardId).orElseThrow();
+        Ticket ticket = ticketRepository
+                .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
+                .orElseThrow(() -> new NoSuchElementException("ticket not found"));
         ticket.setTitle(ticketTitleDto.getTitle());
         ticketRepository.saveAndFlush(ticket);
         return ticketMapper.toTicketDto(ticket);
     }
 
+    @Transactional
     @Override
     public TicketDto deleteTicket(Integer ticketId,
                                   Integer columnId,
                                   Integer boardId) {
-        Ticket ticket = ticketRepository.findByIdAndColumn_IdAndColumn_Board_Id(
-                ticketId, columnId, boardId).orElseThrow();
+        Ticket ticket = ticketRepository
+                .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
+                .orElseThrow(() -> new NoSuchElementException("ticket not found"));
         ticketRepository.delete(ticket);
         return ticketMapper.toTicketDto(ticket);
     }
