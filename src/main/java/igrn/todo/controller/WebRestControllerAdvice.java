@@ -1,24 +1,32 @@
 package igrn.todo.controller;
 
+import igrn.todo.exception.BoardNotFoundException;
+import igrn.todo.exception.ColumnNotFoundException;
+import igrn.todo.exception.TicketNotFoundException;
+import igrn.todo.exception.UserNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.NoSuchElementException;
-
 @RestControllerAdvice
 public class WebRestControllerAdvice {
+    private final Logger logger = LogManager.getLogger();
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleException(IllegalArgumentException ex) {
+        logger.warn(ex.getMessage());
         return ex.getMessage();
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoSuchElementException.class)
-    public String handleException(NoSuchElementException ex) {
+    @ExceptionHandler({UserNotFoundException.class, BoardNotFoundException.class,
+            ColumnNotFoundException.class, TicketNotFoundException.class})
+    public String handleException(RuntimeException ex) {
+        logger.warn(ex.getMessage());
         return ex.getMessage();
     }
 }

@@ -3,14 +3,13 @@ package igrn.todo.service.impl;
 import igrn.todo.dto.TicketDto;
 import igrn.todo.dto.TicketTitleDto;
 import igrn.todo.entity.Ticket;
+import igrn.todo.exception.TicketNotFoundException;
 import igrn.todo.repository.TicketRepository;
 import igrn.todo.service.TicketService;
 import igrn.todo.service.factory.TicketFactory;
 import igrn.todo.service.mapper.TicketMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @Service
 public class JpaTicketService implements TicketService {
@@ -33,7 +32,7 @@ public class JpaTicketService implements TicketService {
                                Integer boardId) {
         Ticket ticket = ticketRepository
                 .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
-                .orElseThrow(() -> new NoSuchElementException("ticket not found"));
+                .orElseThrow(() -> new TicketNotFoundException("Ticket not found"));
         return ticketMapper.toTicketDto(ticket);
     }
 
@@ -55,7 +54,7 @@ public class JpaTicketService implements TicketService {
                                 TicketTitleDto ticketTitleDto) {
         Ticket ticket = ticketRepository
                 .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
-                .orElseThrow(() -> new NoSuchElementException("ticket not found"));
+                .orElseThrow(() -> new TicketNotFoundException("Ticket not found"));
         ticket.setTitle(ticketTitleDto.getTitle());
         ticketRepository.saveAndFlush(ticket);
         return ticketMapper.toTicketDto(ticket);
@@ -68,7 +67,7 @@ public class JpaTicketService implements TicketService {
                                   Integer boardId) {
         Ticket ticket = ticketRepository
                 .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
-                .orElseThrow(() -> new NoSuchElementException("ticket not found"));
+                .orElseThrow(() -> new TicketNotFoundException("Ticket not found"));
         ticketRepository.delete(ticket);
         return ticketMapper.toTicketDto(ticket);
     }

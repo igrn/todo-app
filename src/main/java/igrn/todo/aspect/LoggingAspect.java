@@ -24,7 +24,7 @@ public class LoggingAspect {
     @After("@annotation(loggable)")
     public void loggable(JoinPoint joinPoint, Loggable loggable) {
         String email = userContext.getEmail();
-        logger.info(String.format("[email = %s] Executed successfully: %s",
+        logger.info(String.format("[email = %s] Executing method: %s",
                 email, joinPoint.getSignature().getName()));
     }
 }
