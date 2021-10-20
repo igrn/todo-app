@@ -7,7 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,7 +28,7 @@ public class Board {
     private Instant updatedAt;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
-    private List<Column> columns;
+    private Set<Column> columns;
 
     public Board() {}
 

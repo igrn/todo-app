@@ -15,7 +15,7 @@ public class TicketFactory {
     }
 
     /**
-     * @throws ColumnNotFoundException if a Column with provided ids was not found
+     * @throws ColumnNotFoundException if a Column with provided ids were not found
      */
     public Ticket build(Integer columnId, Integer boardId, String title) {
         Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId)

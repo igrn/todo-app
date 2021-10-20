@@ -45,6 +45,7 @@ public class JpaBoardService implements BoardService {
         return boardMapper.toBoardShortDto(boards);
     }
 
+    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public BoardDto getBoard(Integer boardId) {
@@ -65,6 +66,7 @@ public class JpaBoardService implements BoardService {
         return boardMapper.toBoardShortDto(board);
     }
 
+    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public BoardShortDto editBoard(Integer boardId, BoardTitleDto boardTitleDto) {
@@ -75,6 +77,7 @@ public class JpaBoardService implements BoardService {
         return boardMapper.toBoardShortDto(board);
     }
 
+    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public BoardShortDto deleteBoard(Integer boardId) {

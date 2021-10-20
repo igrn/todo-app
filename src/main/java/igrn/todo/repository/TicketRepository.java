@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
-    Optional<Ticket> findByIdAndColumn_IdAndColumn_Board_Id(Integer ticketId,
-                                                            Integer columnId,
-                                                            Integer boardId);
+    Optional<Ticket> findByIdAndColumn_IdAndColumn_Board_Id(
+            Integer ticketId, Integer columnId, Integer boardId);
 }

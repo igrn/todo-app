@@ -27,7 +27,6 @@ public class UserContextAspect {
     public void setUserContext() {
         HttpServletRequest request = ((ServletRequestAttributes)
                 Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-
         String email = request.getHeader(HEADER_NAME_EMAIL);
         userContext.setEmail(email);
     }
