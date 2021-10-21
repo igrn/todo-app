@@ -1,8 +1,8 @@
 package igrn.todo.controller;
 
 import igrn.todo.annotation.Loggable;
-import igrn.todo.dto.TicketDto;
-import igrn.todo.dto.TicketTitleDto;
+import igrn.todo.dto.ticket.TicketDto;
+import igrn.todo.dto.ticket.TicketTitleDto;
 import igrn.todo.service.TicketService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,13 +1,13 @@
-package igrn.todo.dto;
+package igrn.todo.dto.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
-public class ColumnTitleDto {
+public class BoardTitleDto {
     private final String title;
 
-    public ColumnTitleDto(@JsonProperty("title") String title) {
+    public BoardTitleDto(@JsonProperty("title") String title) {
         this.title = title;
     }
 }

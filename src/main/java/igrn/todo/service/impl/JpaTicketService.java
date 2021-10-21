@@ -1,14 +1,13 @@
 package igrn.todo.service.impl;
 
-import igrn.todo.dto.TicketDto;
-import igrn.todo.dto.TicketTitleDto;
+import igrn.todo.dto.ticket.TicketDto;
+import igrn.todo.dto.ticket.TicketTitleDto;
 import igrn.todo.entity.Ticket;
 import igrn.todo.exception.TicketNotFoundException;
 import igrn.todo.repository.TicketRepository;
 import igrn.todo.service.TicketService;
 import igrn.todo.service.factory.TicketFactory;
 import igrn.todo.service.mapper.TicketMapper;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,6 @@ public class JpaTicketService implements TicketService {
         this.ticketFactory = ticketFactory;
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public TicketDto getTicket(Integer ticketId,
@@ -38,7 +36,6 @@ public class JpaTicketService implements TicketService {
         return ticketMapper.toTicketDto(ticket);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public TicketDto createTicket(Integer columnId,
@@ -49,7 +46,6 @@ public class JpaTicketService implements TicketService {
         return ticketMapper.toTicketDto(ticket);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public TicketDto editTicket(Integer ticketId,
@@ -64,7 +60,6 @@ public class JpaTicketService implements TicketService {
         return ticketMapper.toTicketDto(ticket);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public TicketDto deleteTicket(Integer ticketId,

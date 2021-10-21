@@ -1,15 +1,14 @@
 package igrn.todo.service.impl;
 
-import igrn.todo.dto.ColumnDto;
-import igrn.todo.dto.ColumnShortDto;
-import igrn.todo.dto.ColumnTitleDto;
+import igrn.todo.dto.column.ColumnDto;
+import igrn.todo.dto.column.ColumnShortDto;
+import igrn.todo.dto.column.ColumnTitleDto;
 import igrn.todo.entity.Column;
 import igrn.todo.exception.ColumnNotFoundException;
 import igrn.todo.repository.ColumnRepository;
 import igrn.todo.service.ColumnService;
 import igrn.todo.service.factory.ColumnFactory;
 import igrn.todo.service.mapper.ColumnMapper;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +26,6 @@ public class JpaColumnService implements ColumnService {
         this.columnFactory = columnFactory;
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public ColumnDto getColumn(Integer columnId, Integer boardId) {
@@ -36,7 +34,6 @@ public class JpaColumnService implements ColumnService {
         return columnMapper.toColumnDto(column);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public ColumnShortDto createColumn(Integer boardId, ColumnTitleDto columnTitleDto) {
@@ -45,7 +42,6 @@ public class JpaColumnService implements ColumnService {
         return columnMapper.toColumnShortDto(column);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public ColumnDto editColumn(Integer columnId, Integer boardId, ColumnTitleDto columnTitleDto) {
@@ -56,7 +52,6 @@ public class JpaColumnService implements ColumnService {
         return columnMapper.toColumnDto(column);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public ColumnDto deleteColumn(Integer columnId, Integer boardId) {

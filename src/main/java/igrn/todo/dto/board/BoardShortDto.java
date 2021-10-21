@@ -1,4 +1,4 @@
-package igrn.todo.dto;
+package igrn.todo.dto.board;
 
 import lombok.Getter;
 

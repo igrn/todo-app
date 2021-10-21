@@ -1,8 +1,8 @@
 package igrn.todo.service;
 
-import igrn.todo.dto.BoardDto;
-import igrn.todo.dto.BoardShortDto;
-import igrn.todo.dto.BoardTitleDto;
+import igrn.todo.dto.board.BoardDto;
+import igrn.todo.dto.board.BoardShortDto;
+import igrn.todo.dto.board.BoardTitleDto;
 
 import java.util.List;
 

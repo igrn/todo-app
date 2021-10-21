@@ -1,9 +1,9 @@
 package igrn.todo.controller;
 
 import igrn.todo.annotation.Loggable;
-import igrn.todo.dto.BoardDto;
-import igrn.todo.dto.BoardShortDto;
-import igrn.todo.dto.BoardTitleDto;
+import igrn.todo.dto.board.BoardDto;
+import igrn.todo.dto.board.BoardShortDto;
+import igrn.todo.dto.board.BoardTitleDto;
 import igrn.todo.service.BoardService;
 import org.springframework.web.bind.annotation.*;
 

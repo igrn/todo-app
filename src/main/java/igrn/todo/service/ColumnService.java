@@ -1,8 +1,8 @@
 package igrn.todo.service;
 
-import igrn.todo.dto.ColumnDto;
-import igrn.todo.dto.ColumnShortDto;
-import igrn.todo.dto.ColumnTitleDto;
+import igrn.todo.dto.column.ColumnDto;
+import igrn.todo.dto.column.ColumnShortDto;
+import igrn.todo.dto.column.ColumnTitleDto;
 
 public interface ColumnService {
 

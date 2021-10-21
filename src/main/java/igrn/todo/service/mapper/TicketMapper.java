@@ -1,6 +1,6 @@
 package igrn.todo.service.mapper;
 
-import igrn.todo.dto.TicketDto;
+import igrn.todo.dto.ticket.TicketDto;
 import igrn.todo.entity.Ticket;
 import org.springframework.stereotype.Component;
 

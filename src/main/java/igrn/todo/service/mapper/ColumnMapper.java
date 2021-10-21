@@ -1,7 +1,7 @@
 package igrn.todo.service.mapper;
 
-import igrn.todo.dto.ColumnDto;
-import igrn.todo.dto.ColumnShortDto;
+import igrn.todo.dto.column.ColumnDto;
+import igrn.todo.dto.column.ColumnShortDto;
 import igrn.todo.entity.Column;
 import org.springframework.stereotype.Component;
 

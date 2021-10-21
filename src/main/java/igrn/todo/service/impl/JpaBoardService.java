@@ -1,8 +1,8 @@
 package igrn.todo.service.impl;
 
-import igrn.todo.dto.BoardDto;
-import igrn.todo.dto.BoardShortDto;
-import igrn.todo.dto.BoardTitleDto;
+import igrn.todo.dto.board.BoardDto;
+import igrn.todo.dto.board.BoardShortDto;
+import igrn.todo.dto.board.BoardTitleDto;
 import igrn.todo.entity.Board;
 import igrn.todo.exception.BoardNotFoundException;
 import igrn.todo.exception.UserNotFoundException;
@@ -38,6 +38,7 @@ public class JpaBoardService implements BoardService {
         this.boardFactory = boardFactory;
     }
 
+    @Retryable(RuntimeException.class)
     @Transactional
     @Override
     public List<BoardShortDto> getUserBoardsBaseInfo() {
@@ -45,7 +46,6 @@ public class JpaBoardService implements BoardService {
         return boardMapper.toBoardShortDto(boards);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public BoardDto getBoard(Integer boardId) {
@@ -54,7 +54,6 @@ public class JpaBoardService implements BoardService {
         return boardMapper.toBoardDto(board);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public BoardShortDto createBoard(BoardTitleDto boardTitleDto) {
@@ -66,7 +65,6 @@ public class JpaBoardService implements BoardService {
         return boardMapper.toBoardShortDto(board);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public BoardShortDto editBoard(Integer boardId, BoardTitleDto boardTitleDto) {
@@ -77,7 +75,6 @@ public class JpaBoardService implements BoardService {
         return boardMapper.toBoardShortDto(board);
     }
 
-    @Retryable(IllegalArgumentException.class)
     @Transactional
     @Override
     public BoardShortDto deleteBoard(Integer boardId) {

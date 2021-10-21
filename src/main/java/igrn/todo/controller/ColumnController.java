@@ -1,9 +1,9 @@
 package igrn.todo.controller;
 
 import igrn.todo.annotation.Loggable;
-import igrn.todo.dto.ColumnDto;
-import igrn.todo.dto.ColumnShortDto;
-import igrn.todo.dto.ColumnTitleDto;
+import igrn.todo.dto.column.ColumnDto;
+import igrn.todo.dto.column.ColumnShortDto;
+import igrn.todo.dto.column.ColumnTitleDto;
 import igrn.todo.service.ColumnService;
 import org.springframework.web.bind.annotation.*;
 
