@@ -17,16 +17,16 @@ public class WebRestControllerAdvice {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public String handleException(IllegalArgumentException ex) {
-        logger.warn(ex.getMessage());
-        return ex.getMessage();
+    public String handleException(IllegalArgumentException e) {
+        logger.warn(e.getMessage());
+        return e.getMessage();
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler({UserNotFoundException.class, BoardNotFoundException.class,
             ColumnNotFoundException.class, TicketNotFoundException.class})
-    public String handleException(RuntimeException ex) {
-        logger.warn(ex.getMessage());
-        return ex.getMessage();
+    public String handleException(RuntimeException e) {
+        logger.warn(e.getMessage());
+        return e.getMessage();
     }
 }

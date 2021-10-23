@@ -61,7 +61,7 @@ public class JpaBoardService implements BoardService {
         Integer userId = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found")).getId();
         Board board = boardFactory.build(userId, boardTitleDto.getTitle());
-        boardRepository.saveAndFlush(board);
+        board = boardRepository.save(board);
         return boardMapper.toBoardShortDto(board);
     }
 
@@ -71,7 +71,7 @@ public class JpaBoardService implements BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("Board not found"));
         board.setTitle(boardTitleDto.getTitle());
-        boardRepository.saveAndFlush(board);
+        board = boardRepository.save(board);
         return boardMapper.toBoardShortDto(board);
     }
 

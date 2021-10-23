@@ -38,7 +38,7 @@ public class JpaColumnService implements ColumnService {
     @Override
     public ColumnShortDto createColumn(Integer boardId, ColumnTitleDto columnTitleDto) {
         Column column = columnFactory.build(boardId, columnTitleDto.getTitle());
-        columnRepository.saveAndFlush(column);
+        column = columnRepository.save(column);
         return columnMapper.toColumnShortDto(column);
     }
 
@@ -48,7 +48,7 @@ public class JpaColumnService implements ColumnService {
         Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId)
                 .orElseThrow(() -> new ColumnNotFoundException("Column not found"));
         column.setTitle(columnTitleDto.getTitle());
-        columnRepository.saveAndFlush(column);
+        column = columnRepository.save(column);
         return columnMapper.toColumnDto(column);
     }
 

@@ -42,7 +42,7 @@ public class JpaTicketService implements TicketService {
                                   Integer boardId,
                                   TicketTitleDto ticketTitleDto) {
         Ticket ticket = ticketFactory.build(columnId, boardId, ticketTitleDto.getTitle());
-        ticketRepository.saveAndFlush(ticket);
+        ticket = ticketRepository.save(ticket);
         return ticketMapper.toTicketDto(ticket);
     }
 
@@ -56,7 +56,7 @@ public class JpaTicketService implements TicketService {
                 .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
                 .orElseThrow(() -> new TicketNotFoundException("Ticket not found"));
         ticket.setTitle(ticketTitleDto.getTitle());
-        ticketRepository.saveAndFlush(ticket);
+        ticket = ticketRepository.save(ticket);
         return ticketMapper.toTicketDto(ticket);
     }
 

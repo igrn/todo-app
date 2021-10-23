@@ -13,12 +13,12 @@ import java.util.Set;
 @Getter
 @Setter
 public class Board {
+
     @Id
     @SequenceGenerator(name = "board_id_seq_generator", sequenceName = "board_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "board_id_seq_generator")
     private Integer id;
 
-    private Integer userId;
     private String title;
 
     @CreationTimestamp
@@ -27,7 +27,14 @@ public class Board {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+    @javax.persistence.Column(name = "user_id", nullable = false)
+    private Integer userId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false, nullable = false)
+    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board") //FIXME: исправить N+1: FetchType, EntityGraph?
     private Set<Column> columns;
 
     public Board() {}

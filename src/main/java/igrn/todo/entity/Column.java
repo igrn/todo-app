@@ -13,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class Column {
+
     @Id
     @SequenceGenerator(name = "column_id_seq_generator", sequenceName = "column_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "column_id_seq_generator")
@@ -25,6 +26,8 @@ public class Column {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    //TODO: добавить внешний ключ?
 
     @ManyToOne
     @JoinColumn(name = "board_id", nullable = false)

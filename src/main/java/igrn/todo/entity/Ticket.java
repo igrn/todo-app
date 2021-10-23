@@ -12,6 +12,7 @@ import java.time.Instant;
 @Getter
 @Setter
 public class Ticket {
+
     @Id
     @SequenceGenerator(name = "ticket_id_seq_generator", sequenceName = "ticket_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_id_seq_generator")
@@ -24,6 +25,8 @@ public class Ticket {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    //TODO: добавить внешний ключ?
 
     @ManyToOne
     @JoinColumn(name = "column_id", nullable = false)
