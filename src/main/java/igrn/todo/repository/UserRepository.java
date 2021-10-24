@@ -20,6 +20,9 @@ public interface UserRepository extends
     UserIdProjection findOneByEmail(String email);
 
     @EntityGraph("User.roles")
+    Optional<User> findOneWithRolesByEmail(String email);
+
+    @EntityGraph("User.roles")
     @Query("select u from User u")
     List<User> findAllWithRoles();
 }

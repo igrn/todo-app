@@ -4,6 +4,7 @@ import igrn.todo.dto.board.BoardDto;
 import igrn.todo.dto.board.BoardShortDto;
 import igrn.todo.dto.board.BoardTitleDto;
 import igrn.todo.entity.Board;
+import igrn.todo.enums.ExceptionMessage;
 import igrn.todo.exception.BoardNotFoundException;
 import igrn.todo.exception.UserNotFoundException;
 import igrn.todo.repository.BoardRepository;
@@ -49,8 +50,8 @@ public class JpaBoardService implements BoardService {
     @Transactional
     @Override
     public BoardDto getBoard(Integer boardId) {
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BoardNotFoundException("Board not found"));
+        Board board = boardRepository.findById(boardId).orElseThrow(() ->
+                new BoardNotFoundException(ExceptionMessage.BOARD_NOT_FOUND.getMessage()));
         return boardMapper.toBoardDto(board);
     }
 
@@ -59,7 +60,9 @@ public class JpaBoardService implements BoardService {
     public BoardShortDto createBoard(BoardTitleDto boardTitleDto) {
         String email = userContext.getEmail();
         Integer userId = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found")).getId();
+                .orElseThrow(() -> new UserNotFoundException(
+                        String.format(ExceptionMessage.USER_NOT_FOUND.getMessage(), email)))
+                .getId();
         Board board = boardFactory.build(userId, boardTitleDto.getTitle());
         board = boardRepository.save(board);
         return boardMapper.toBoardShortDto(board);
@@ -68,8 +71,8 @@ public class JpaBoardService implements BoardService {
     @Transactional
     @Override
     public BoardShortDto editBoard(Integer boardId, BoardTitleDto boardTitleDto) {
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BoardNotFoundException("Board not found"));
+        Board board = boardRepository.findById(boardId).orElseThrow(() ->
+                new BoardNotFoundException(ExceptionMessage.BOARD_NOT_FOUND.getMessage()));
         board.setTitle(boardTitleDto.getTitle());
         board = boardRepository.save(board);
         return boardMapper.toBoardShortDto(board);
@@ -78,8 +81,8 @@ public class JpaBoardService implements BoardService {
     @Transactional
     @Override
     public BoardShortDto deleteBoard(Integer boardId) {
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BoardNotFoundException("Board not found"));
+        Board board = boardRepository.findById(boardId).orElseThrow(() ->
+                new BoardNotFoundException(ExceptionMessage.BOARD_NOT_FOUND.getMessage()));
         boardRepository.delete(board);
         return boardMapper.toBoardShortDto(board);
     }

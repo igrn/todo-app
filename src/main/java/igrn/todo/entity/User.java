@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
 
     @CreationTimestamp
     private Instant createdAt;
@@ -38,4 +40,15 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles;
+
+    public User() {}
+
+    public User(String email, String password,
+                String firstName, String lastName, Collection<Role> roles) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roles = (Set<Role>) roles;
+    }
 }

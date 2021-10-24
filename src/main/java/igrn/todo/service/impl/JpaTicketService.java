@@ -3,6 +3,7 @@ package igrn.todo.service.impl;
 import igrn.todo.dto.ticket.TicketDto;
 import igrn.todo.dto.ticket.TicketTitleDto;
 import igrn.todo.entity.Ticket;
+import igrn.todo.enums.ExceptionMessage;
 import igrn.todo.exception.TicketNotFoundException;
 import igrn.todo.repository.TicketRepository;
 import igrn.todo.service.TicketService;
@@ -32,7 +33,8 @@ public class JpaTicketService implements TicketService {
                                Integer boardId) {
         Ticket ticket = ticketRepository
                 .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
-                .orElseThrow(() -> new TicketNotFoundException("Ticket not found"));
+                .orElseThrow(() -> new TicketNotFoundException(
+                        ExceptionMessage.TICKET_NOT_FOUND.getMessage()));
         return ticketMapper.toTicketDto(ticket);
     }
 
@@ -54,7 +56,8 @@ public class JpaTicketService implements TicketService {
                                 TicketTitleDto ticketTitleDto) {
         Ticket ticket = ticketRepository
                 .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
-                .orElseThrow(() -> new TicketNotFoundException("Ticket not found"));
+                .orElseThrow(() -> new TicketNotFoundException(
+                        ExceptionMessage.TICKET_NOT_FOUND.getMessage()));
         ticket.setTitle(ticketTitleDto.getTitle());
         ticket = ticketRepository.save(ticket);
         return ticketMapper.toTicketDto(ticket);
@@ -67,7 +70,8 @@ public class JpaTicketService implements TicketService {
                                   Integer boardId) {
         Ticket ticket = ticketRepository
                 .findByIdAndColumn_IdAndColumn_Board_Id(ticketId, columnId, boardId)
-                .orElseThrow(() -> new TicketNotFoundException("Ticket not found"));
+                .orElseThrow(() -> new TicketNotFoundException(
+                        ExceptionMessage.TICKET_NOT_FOUND.getMessage()));
         ticketRepository.delete(ticket);
         return ticketMapper.toTicketDto(ticket);
     }

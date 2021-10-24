@@ -4,6 +4,7 @@ import igrn.todo.dto.column.ColumnDto;
 import igrn.todo.dto.column.ColumnShortDto;
 import igrn.todo.dto.column.ColumnTitleDto;
 import igrn.todo.entity.Column;
+import igrn.todo.enums.ExceptionMessage;
 import igrn.todo.exception.ColumnNotFoundException;
 import igrn.todo.repository.ColumnRepository;
 import igrn.todo.service.ColumnService;
@@ -29,8 +30,8 @@ public class JpaColumnService implements ColumnService {
     @Transactional
     @Override
     public ColumnDto getColumn(Integer columnId, Integer boardId) {
-        Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId)
-                .orElseThrow(() -> new ColumnNotFoundException("Column not found"));
+        Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId).orElseThrow(() ->
+                new ColumnNotFoundException(ExceptionMessage.COLUMN_NOT_FOUND.getMessage()));
         return columnMapper.toColumnDto(column);
     }
 
@@ -45,8 +46,8 @@ public class JpaColumnService implements ColumnService {
     @Transactional
     @Override
     public ColumnDto editColumn(Integer columnId, Integer boardId, ColumnTitleDto columnTitleDto) {
-        Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId)
-                .orElseThrow(() -> new ColumnNotFoundException("Column not found"));
+        Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId).orElseThrow(() ->
+                new ColumnNotFoundException(ExceptionMessage.COLUMN_NOT_FOUND.getMessage()));
         column.setTitle(columnTitleDto.getTitle());
         column = columnRepository.save(column);
         return columnMapper.toColumnDto(column);
@@ -55,8 +56,8 @@ public class JpaColumnService implements ColumnService {
     @Transactional
     @Override
     public ColumnDto deleteColumn(Integer columnId, Integer boardId) {
-        Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId)
-                .orElseThrow(() -> new ColumnNotFoundException("Column not found"));
+        Column column = columnRepository.findByIdAndBoard_Id(columnId, boardId).orElseThrow(() ->
+                new ColumnNotFoundException(ExceptionMessage.COLUMN_NOT_FOUND.getMessage()));
         columnRepository.delete(column);
         return columnMapper.toColumnDto(column);
     }
