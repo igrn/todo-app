@@ -1,7 +1,6 @@
 package igrn.todo.service.auth;
 
 import igrn.todo.dto.user.auth.UserAuthInfoDto;
-import igrn.todo.enums.ExceptionMessage;
 import igrn.todo.exception.UserNotFoundException;
 import igrn.todo.service.UserService;
 import org.springframework.security.core.userdetails.User;
@@ -20,8 +19,7 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UserNotFoundException {
         UserAuthInfoDto userInfo = userService.findAuthInfo(username)
-                .orElseThrow(() -> new UserNotFoundException(
-                        String.format(ExceptionMessage.USER_NOT_FOUND.getMessage(), username)));
+                .orElseThrow(() -> UserNotFoundException.buildWith(username));
 
         return User.builder()
                 .username(userInfo.getEmail())

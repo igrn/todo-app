@@ -8,8 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,7 +26,6 @@ public final class UserSpecification {
         };
     }
 
-    //FIXME: default -> IllegalArgumentException не работает, уже перехвачено Jackson-ом
     private static Predicate createPredicate(Root<User> users, Join<User, Role> roles,
                                              CriteriaBuilder cb, UserFilterDto filter) {
         Collection<String> constraints = filter.getValues();
@@ -36,6 +33,7 @@ public final class UserSpecification {
             case ID -> cb.in(users.get("id")).value(toInteger(constraints));
             case EMAIL -> cb.in(users.get("email")).value(constraints);
             case ROLES -> cb.in(roles.get("code")).value(constraints);
+            //default -> IllegalArgumentException не нужен, уже перехвачено Jackson-ом
         };
     }
 

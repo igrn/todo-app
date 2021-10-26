@@ -9,15 +9,15 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UserWithRolesDto {
 
-    @EqualsAndHashCode.Include //TODO: зачем это тут?
+    @EqualsAndHashCode.Include
     private final Integer id;
 
     private final String email;
-    private final List<String> codes;
+    private final List<String> roleCodes;
 
-    public UserWithRolesDto(Integer id, String email, List<String> codes) {
+    public UserWithRolesDto(Integer id, String email, List<String> roleCodes) {
         this.id = id;
         this.email = email;
-        this.codes = codes;
+        this.roleCodes = roleCodes;
     }
 }

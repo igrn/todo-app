@@ -1,7 +1,8 @@
 package igrn.todo.controller;
 
+import igrn.todo.annotation.Loggable;
 import igrn.todo.dto.user.UserWithRolesDto;
-import igrn.todo.dto.user.auth.UserRegisterDto;
+import igrn.todo.dto.user.auth.UserCreateDto;
 import igrn.todo.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +18,9 @@ public class LoginController {
         this.userService = userService;
     }
 
+    @Loggable
     @PostMapping("/signup")
-    public UserWithRolesDto register(@RequestBody UserRegisterDto userRegisterDto) {
-        return userService.createUser(userRegisterDto);
+    public UserWithRolesDto createUser(@RequestBody UserCreateDto userCreateDto) {
+        return userService.createUser(userCreateDto);
     }
 }

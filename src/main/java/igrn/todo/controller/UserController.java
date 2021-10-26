@@ -1,5 +1,6 @@
 package igrn.todo.controller;
 
+import igrn.todo.annotation.Loggable;
 import igrn.todo.dto.user.UserWithRolesDto;
 import igrn.todo.dto.user.filter.UserFilterDto;
 import igrn.todo.service.UserService;
@@ -18,22 +19,25 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Loggable
     @GetMapping
     public List<UserWithRolesDto> getUsers() {
         return userService.getUsers();
     }
 
+    @Loggable
     @PreAuthorize("hasRole('admin')")
     @PostMapping
     public List<UserWithRolesDto> getUsers(@RequestBody Collection<UserFilterDto> filters) {
         return userService.getUsers(filters);
     }
 
+    @Loggable
     @PreAuthorize("hasRole('admin')")
     @PostMapping("/{email}/roles")
     public void editRoles(@PathVariable String email,
                           @RequestBody Collection<String> roleCodes) {
         Integer userId = userService.getId(email);
-        userService.editRoles(userId, roleCodes);
+        userService.editRoles(userId, email, roleCodes);
     }
 }

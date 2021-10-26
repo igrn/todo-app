@@ -26,16 +26,17 @@ public class Ticket {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    //TODO: добавить внешний ключ?
+    @javax.persistence.Column(name = "column_id", nullable = false)
+    private Integer columnId;
 
-    @ManyToOne
-    @JoinColumn(name = "column_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "column_id", insertable = false, updatable = false, nullable = false)
     private Column column;
 
     public Ticket() {}
 
-    public Ticket(String title, Column column) {
+    public Ticket(String title, Integer columnId) {
         this.title = title;
-        this.column = column;
+        this.columnId = columnId;
     }
 }

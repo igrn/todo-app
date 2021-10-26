@@ -15,7 +15,9 @@ import java.util.Optional;
 public interface UserRepository extends
         JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
-    Optional<User> findByEmail(String email); //TODO: заменить этот метод на проекцию?
+    boolean existsByEmail(String email);
+
+    Optional<User> findByEmail(String email);
 
     UserIdProjection findOneByEmail(String email);
 

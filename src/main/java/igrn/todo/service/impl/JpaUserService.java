@@ -1,11 +1,13 @@
 package igrn.todo.service.impl;
 
-import igrn.todo.dto.user.auth.UserAuthInfoDto;
 import igrn.todo.dto.user.UserWithRolesDto;
-import igrn.todo.dto.user.auth.UserRegisterDto;
+import igrn.todo.dto.user.auth.UserAuthInfoDto;
+import igrn.todo.dto.user.auth.UserCreateDto;
 import igrn.todo.dto.user.filter.UserFilterDto;
 import igrn.todo.entity.Role;
 import igrn.todo.entity.User;
+import igrn.todo.exception.RoleNotFoundException;
+import igrn.todo.exception.UserAlreadyExistsException;
 import igrn.todo.exception.UserNotFoundException;
 import igrn.todo.repository.RoleRepository;
 import igrn.todo.repository.UserRepository;
@@ -39,17 +41,24 @@ public class JpaUserService implements UserService {
         this.userFactory = userFactory;
     }
 
+    @Transactional
     @Override
     public Integer getId(String email) {
-        return userRepository.findOneByEmail(email).getId();
+        try {
+            return userRepository.findOneByEmail(email).getId();
+        } catch (NullPointerException e) {
+            throw UserNotFoundException.buildWith(email);
+        }
     }
 
+    @Transactional
     @Override
     public List<UserWithRolesDto> getUsers() {
         List<User> users = userRepository.findAllWithRoles();
         return userMapper.toUserWithRolesDto(users);
     }
 
+    @Transactional
     @Override
     public List<UserWithRolesDto> getUsers(Collection<UserFilterDto> filters) {
         List<User> users = userRepository.findAll(UserSpecification.findUsers(filters));
@@ -58,14 +67,16 @@ public class JpaUserService implements UserService {
 
     @Transactional
     @Override
-    public void editRoles(Integer userId, Collection<String> roleCodes) {
+    public void editRoles(Integer userId, String email, Collection<String> roleCodes) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> UserNotFoundException.buildWith(email));
+
         Set<Role> newRoles = roleRepository.findAllByCodeIn(roleCodes);
         user.setRoles(newRoles);
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public Optional<UserAuthInfoDto> findAuthInfo(String email) {
         Optional<User> userOpt = userRepository.findOneWithRolesByEmail(email);
@@ -84,13 +95,20 @@ public class JpaUserService implements UserService {
 
     @Transactional
     @Override
-    public UserWithRolesDto createUser(UserRegisterDto userRegisterDto) {
-        String email = userRegisterDto.getEmail();
-        String password = userRegisterDto.getPassword();
-        String firstName = userRegisterDto.getFirstName();
-        String lastName = userRegisterDto.getLastName();
-        User user = userFactory.build(email, password, firstName, lastName);
-        user = userRepository.save(user);
-        return userMapper.toUserWithRolesDto(user);
+    public UserWithRolesDto createUser(UserCreateDto userCreateDto) {
+        String email = userCreateDto.getEmail();
+        String password = userCreateDto.getPassword();
+        String firstName = userCreateDto.getFirstName();
+        String lastName = userCreateDto.getLastName();
+        Set<Role> roles = Set.of(roleRepository.findByCode("user")
+                .orElseThrow(RoleNotFoundException::build));
+
+        if (!userRepository.existsByEmail(email)) {
+            User user = userFactory.build(email, password, firstName, lastName, roles);
+            user = userRepository.save(user);
+            return userMapper.toUserWithRolesDto(user);
+        } else {
+            throw UserAlreadyExistsException.buildWith(email);
+        }
     }
 }

@@ -12,6 +12,15 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "Board.columns", attributeNodes = {
+                @NamedAttributeNode(value = "columns", subgraph = "Column.tickets")
+        }, subgraphs = {
+                @NamedSubgraph(name = "Column.tickets", attributeNodes = {
+                        @NamedAttributeNode(value = "tickets")
+                })
+        })
+})
 public class Board {
 
     @Id
@@ -30,17 +39,17 @@ public class Board {
     @javax.persistence.Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false, nullable = false)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board") //FIXME: исправить N+1: FetchType, EntityGraph?
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
     private Set<Column> columns;
 
     public Board() {}
 
-    public Board(Integer userId, String title) {
-        this.userId = userId;
+    public Board(String title, Integer userId) {
         this.title = title;
+        this.userId = userId;
     }
 }

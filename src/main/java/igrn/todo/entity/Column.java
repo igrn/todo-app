@@ -12,6 +12,11 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "Column.tickets", attributeNodes = {
+                @NamedAttributeNode(value = "tickets")
+        })
+})
 public class Column {
 
     @Id
@@ -27,10 +32,11 @@ public class Column {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    //TODO: добавить внешний ключ?
+    @javax.persistence.Column(name = "board_id", nullable = false)
+    private Integer boardId;
 
-    @ManyToOne
-    @JoinColumn(name = "board_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id", insertable = false, updatable = false, nullable = false)
     private Board board;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "column")
@@ -38,8 +44,8 @@ public class Column {
 
     public Column() {}
 
-    public Column(String title, Board board) {
+    public Column(String title, Integer boardId) {
         this.title = title;
-        this.board = board;
+        this.boardId = boardId;
     }
 }
