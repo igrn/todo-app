@@ -8,3 +8,7 @@ gradlew.bat
 # Intellij IDEA files
 .idea/
 *.iml
+
+# Logging files
+logs/
+*.log

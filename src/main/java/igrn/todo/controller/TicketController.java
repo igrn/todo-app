@@ -1,43 +1,50 @@
 package igrn.todo.controller;
 
-import igrn.todo.dto.TicketDto;
-import igrn.todo.dto.TicketUpdateDto;
+import igrn.todo.annotation.Loggable;
+import igrn.todo.dto.ticket.TicketDto;
+import igrn.todo.dto.ticket.TicketTitleDto;
+import igrn.todo.service.TicketService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/boards/{boardId}/columns/{columnId}/tickets")
 public class TicketController {
+    private final TicketService ticketService;
 
-    // Получить карточку из определенной колонки
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
+    }
+
+    @Loggable
     @GetMapping("/{ticketId}")
     public TicketDto getTicket(@PathVariable Integer ticketId,
                                @PathVariable Integer columnId,
                                @PathVariable Integer boardId) {
-        return new TicketDto(ticketId, columnId, "Ticket " + ticketId);
+        return ticketService.getTicket(ticketId, columnId, boardId);
     }
 
-    // Создать карточку в определенной колонке
+    @Loggable
     @PostMapping()
-    public TicketDto createTicket(@RequestBody TicketUpdateDto ticketUpdateDto,
-                                  @PathVariable Integer columnId,
-                                  @PathVariable Integer boardId) {
-        return new TicketDto(999, columnId, ticketUpdateDto.getTitle());
+    public TicketDto createTicket(@PathVariable Integer columnId,
+                                  @PathVariable Integer boardId,
+                                  @RequestBody TicketTitleDto ticketTitleDto) {
+        return ticketService.createTicket(columnId, boardId, ticketTitleDto);
     }
 
-    // Изменить карточку в определенной колонке
+    @Loggable
     @PutMapping("/{ticketId}")
-    public TicketDto editTicket(@RequestBody TicketUpdateDto ticketUpdateDto,
-                                @PathVariable Integer ticketId,
+    public TicketDto editTicket(@PathVariable Integer ticketId,
                                 @PathVariable Integer columnId,
-                                @PathVariable Integer boardId) {
-        return new TicketDto(ticketId, columnId, ticketUpdateDto.getTitle());
+                                @PathVariable Integer boardId,
+                                @RequestBody TicketTitleDto ticketTitleDto) {
+        return ticketService.editTicket(ticketId, columnId, boardId, ticketTitleDto);
     }
 
-    // Удалить карточку из определенной колонки
+    @Loggable
     @DeleteMapping("/{ticketId}")
     public TicketDto deleteTicket(@PathVariable Integer ticketId,
                                   @PathVariable Integer columnId,
                                   @PathVariable Integer boardId) {
-        return new TicketDto(ticketId, columnId, "Deleted Ticket");
+        return ticketService.deleteTicket(ticketId, columnId, boardId);
     }
 }

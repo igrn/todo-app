@@ -1,6 +1,8 @@
-package igrn.todo.dto;
+package igrn.todo.dto.board;
 
+import igrn.todo.dto.column.ColumnDto;
 import lombok.Getter;
+
 import java.util.List;
 
 @Getter
