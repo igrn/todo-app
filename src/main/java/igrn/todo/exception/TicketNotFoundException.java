@@ -1,26 +1,15 @@
 package igrn.todo.exception;
 
-public class TicketNotFoundException extends RuntimeException {
+import igrn.todo.enums.ExceptionMessage;
 
-    public TicketNotFoundException() {
-        super();
-    }
+public class TicketNotFoundException extends RuntimeException {
 
     public TicketNotFoundException(String message) {
         super(message);
     }
 
-    public TicketNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public TicketNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    public TicketNotFoundException(String message, Throwable cause,
-                                   boolean enableSuppression,
-                                   boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public static TicketNotFoundException build() {
+        String message = ExceptionMessage.TICKET_NOT_FOUND.getMessage();
+        return new TicketNotFoundException(message);
     }
 }

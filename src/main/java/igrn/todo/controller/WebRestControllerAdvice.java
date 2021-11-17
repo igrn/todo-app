@@ -1,9 +1,6 @@
 package igrn.todo.controller;
 
-import igrn.todo.exception.BoardNotFoundException;
-import igrn.todo.exception.ColumnNotFoundException;
-import igrn.todo.exception.TicketNotFoundException;
-import igrn.todo.exception.UserNotFoundException;
+import igrn.todo.exception.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -17,16 +14,26 @@ public class WebRestControllerAdvice {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public String handleException(IllegalArgumentException ex) {
-        logger.warn(ex.getMessage());
-        return ex.getMessage();
+    public String handleException(IllegalArgumentException e) {
+        logger.warn(e.getMessage());
+        return e.getMessage();
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public String handleException(UserAlreadyExistsException e) {
+        logger.warn(e.getMessage());
+        return e.getMessage();
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    @ExceptionHandler({UserNotFoundException.class, BoardNotFoundException.class,
-            ColumnNotFoundException.class, TicketNotFoundException.class})
-    public String handleException(RuntimeException ex) {
-        logger.warn(ex.getMessage());
-        return ex.getMessage();
+    @ExceptionHandler({
+            UserNotFoundException.class, RoleNotFoundException.class,
+            BoardNotFoundException.class, ColumnNotFoundException.class,
+            TicketNotFoundException.class
+    })
+    public String handleException(RuntimeException e) {
+        logger.warn(e.getMessage());
+        return e.getMessage();
     }
 }

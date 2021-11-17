@@ -1,26 +1,15 @@
 package igrn.todo.exception;
 
-public class BoardNotFoundException extends RuntimeException {
+import igrn.todo.enums.ExceptionMessage;
 
-    public BoardNotFoundException() {
-        super();
-    }
+public class BoardNotFoundException extends RuntimeException {
 
     public BoardNotFoundException(String message) {
         super(message);
     }
 
-    public BoardNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public BoardNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    public BoardNotFoundException(String message, Throwable cause,
-                                  boolean enableSuppression,
-                                  boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public static BoardNotFoundException build() {
+        String message = ExceptionMessage.BOARD_NOT_FOUND.getMessage();
+        return new BoardNotFoundException(message);
     }
 }

@@ -1,26 +1,16 @@
 package igrn.todo.exception;
 
-public class UserNotFoundException extends RuntimeException {
+import igrn.todo.enums.ExceptionMessage;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-    public UserNotFoundException() {
-        super();
-    }
+public class UserNotFoundException extends UsernameNotFoundException {
 
     public UserNotFoundException(String message) {
         super(message);
     }
 
-    public UserNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public UserNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    public UserNotFoundException(String message, Throwable cause,
-                                 boolean enableSuppression,
-                                 boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public static UserNotFoundException buildWith(String email) {
+        String message = String.format(ExceptionMessage.USER_NOT_FOUND.getMessage(), email);
+        return new UserNotFoundException(message);
     }
 }
