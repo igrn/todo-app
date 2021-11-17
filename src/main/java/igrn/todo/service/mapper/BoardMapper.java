@@ -1,7 +1,7 @@
 package igrn.todo.service.mapper;
 
-import igrn.todo.dto.BoardDto;
-import igrn.todo.dto.BoardShortDto;
+import igrn.todo.dto.board.BoardDto;
+import igrn.todo.dto.board.BoardShortDto;
 import igrn.todo.entity.Board;
 import org.springframework.stereotype.Component;
 

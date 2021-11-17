@@ -12,6 +12,7 @@ import java.time.Instant;
 @Getter
 @Setter
 public class Ticket {
+
     @Id
     @SequenceGenerator(name = "ticket_id_seq_generator", sequenceName = "ticket_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_id_seq_generator")
@@ -25,14 +26,17 @@ public class Ticket {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "column_id", nullable = false)
+    @javax.persistence.Column(name = "column_id", nullable = false)
+    private Integer columnId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "column_id", insertable = false, updatable = false, nullable = false)
     private Column column;
 
     public Ticket() {}
 
-    public Ticket(String title, Column column) {
+    public Ticket(String title, Integer columnId) {
         this.title = title;
-        this.column = column;
+        this.columnId = columnId;
     }
 }

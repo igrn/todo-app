@@ -1,7 +1,7 @@
 package igrn.todo.service;
 
-import igrn.todo.dto.TicketDto;
-import igrn.todo.dto.TicketTitleDto;
+import igrn.todo.dto.ticket.TicketDto;
+import igrn.todo.dto.ticket.TicketTitleDto;
 
 public interface TicketService {
 

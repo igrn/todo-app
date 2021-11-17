@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoardFactory {
 
-    public Board build(Integer userId, String title) {
-        return new Board(userId, title);
+    public Board build(String title, Integer userId) {
+        return new Board(title, userId);
     }
 }

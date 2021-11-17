@@ -1,5 +1,6 @@
-package igrn.todo.dto;
+package igrn.todo.dto.column;
 
+import igrn.todo.dto.ticket.TicketDto;
 import lombok.Getter;
 
 import java.util.List;
