@@ -33,7 +33,7 @@ public final class UserSpecification {
             case ID -> cb.in(users.get("id")).value(toInteger(constraints));
             case EMAIL -> cb.in(users.get("email")).value(constraints);
             case ROLES -> cb.in(roles.get("code")).value(constraints);
-            //default -> IllegalArgumentException не нужен, уже перехвачено Jackson-ом
+            default -> throw new IllegalArgumentException();
         };
     }
 
